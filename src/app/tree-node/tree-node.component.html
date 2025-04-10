@@ -1,0 +1,37 @@
+@let haveChildren = node.children.length > 0;
+
+<div class="tree-node" [class.lines]="showLines">
+    <div class="node-content" [class.deleted]="node.is_deleted" (click)="toggleNode()">
+        @if (haveChildren) {
+        <span class="arrow">
+            @if (isExpanded) {
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <g>
+                    <path
+                        d="M12,2A10,10,0,1,0,22,12,10.011,10.011,0,0,0,12,2Zm0,18a8,8,0,1,1,8-8A8.009,8.009,0,0,1,12,20Z" />
+                    <polygon
+                        points="7.293 13.293 8.707 14.707 12 11.414 15.293 14.707 16.707 13.293 12 8.586 7.293 13.293" />
+                </g>
+            </svg>
+            } @else {
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <g>
+                    <path
+                        d="M12,2A10,10,0,1,0,22,12,10.011,10.011,0,0,0,12,2Zm0,18a8,8,0,1,1,8-8A8.009,8.009,0,0,1,12,20Z" />
+                    <polygon
+                        points="12 12.586 8.707 9.293 7.293 10.707 12 15.414 16.707 10.707 15.293 9.293 12 12.586" />
+                </g>
+            </svg>
+            }
+        </span>
+        }
+        <span class="node-text">{{ node.id }} - {{ node.title }}</span>
+    </div>
+    @if (isExpanded && haveChildren) {
+    <div class="children">
+        @for (child of node.children; track node.id) {
+        <app-tree-node [node]="child" [showLines]="true"></app-tree-node>
+        }
+    </div>
+    }
+</div>
